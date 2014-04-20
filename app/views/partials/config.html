@@ -1,0 +1,30 @@
+<!-- partials/config.html -->
+<div class="container">
+<h1>Configuration</h1>
+<hr>
+<form class="form-horizontal" name="config">
+  <div class="form-group" ng-class="{ 'has-error': config.time.$invalid, 'has-warning': isTimePast() }">
+    <label class="control-label col-xs-2" for="time">Time: </label>
+    <div class="controls col-xs-10">
+      <div class="input-group">
+        <input name="time" id="time" class="form-control" type="text" timepicker-popup="shortTime" ng-model="endTime" is-open="isTimeOpen" ng-required="true">
+        <span class="input-group-btn">
+          <button class="btn btn-default" ng-click="toggleTimeOpen($event)" type="button" ng-class="{'btn-danger': config.time.$invalid, 'btn-warning': isTimePast()}">
+            <i class="glyphicon glyphicon-time"></i>
+          </button>
+        </span>
+      </div>
+      <p ng-if="isTimePast()" class="text-warning">
+      You should specify a future time.
+      </p>
+      <p ng-if="config.time.$error.required" class="text-danger">
+      You must specify a time.
+      </p>
+    </div>
+  </div>
+
+  <hr>
+  <div class="form-group" ng-class="{'has-error': config.$invalid}">
+    <button class="btn btn-block" ui-sref="run({time: endTime})" ng-disabled="config.$invalid" ng-class="{'btn-danger': config.$invalid, 'btn-success': config.$valid}">Start</button>
+  </div>
+</ng-form>

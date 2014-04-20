@@ -1,0 +1,11 @@
+<!-- partials/run.html -->
+<h1>
+  <div ng-if="isFuture">
+    <timer end-time="millis">
+      <span>{{minutes}}:{{seconds|pad:2}}</span>
+    </timer>
+  </div>
+  <div ng-if="isPast">
+    <span>0:00</span>
+  </div>
+</h1>
