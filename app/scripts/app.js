@@ -6,7 +6,8 @@ angular.module('cdtApp', [
   'ngSanitize',
   'ui.bootstrap',
   'ui.router',
-  'timer'
+  'timer',
+  'LocalStorageModule'
 ])
   .config(function($stateProvider, $urlRouterProvider) {
     // For any unmatched url, redirect to /config

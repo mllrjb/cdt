@@ -1,0 +1,4 @@
+<div class="full-height">
+  <img ng-repeat="bg in backgrounds" class="bgImg" ng-src="{{bg}}" ng-class="{ transparent: ($index !== currentIndex) }">
+  <div ng-transclude></div>
+</div>

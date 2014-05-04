@@ -231,7 +231,7 @@ module.exports = function (grunt) {
              '<%= yeoman.dist %>/views/{,*/}*.jade'],
       css: ['<%= yeoman.dist %>/public/styles/{,*/}*.css'],
       options: {
-        assetsDirs: ['<%= yeoman.dist %>/public']
+        assetsDirs: ['<%= yeoman.dist %>/public', '<%= yeoman.dist %>/public/images']
       }
     },
 
@@ -260,7 +260,10 @@ module.exports = function (grunt) {
         }]
       }
     },
-
+    /**
+     * Put minified partials in .tmp to be picked up by ngtemplates.
+     * Put minified index.html (and other files) into dist
+     */
     htmlmin: {
       dist: {
         options: {
@@ -272,7 +275,12 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>/views',
-          src: ['*.html', 'partials/**/*.html'],
+          src: ['partials/**/*.html'],
+          dest: '.tmp/views'
+        }, {
+          expand: true,
+          cwd: '<%= yeoman.app %>/views',
+          src: ['*.html'],
           dest: '<%= yeoman.dist %>/views'
         }]
       }
@@ -288,13 +296,6 @@ module.exports = function (grunt) {
           src: '*.js',
           dest: '.tmp/concat/scripts'
         }]
-      }
-    },
-
-    // Replace Google CDN references
-    cdnify: {
-      dist: {
-        html: ['<%= yeoman.dist %>/views/*.html']
       }
     },
 
@@ -412,7 +413,33 @@ module.exports = function (grunt) {
       test: {
         NODE_ENV: 'test'
       }
-    }
+    },
+
+    /**
+     * IMPORTANT: these templates are registered under the same module name as the rest of the application. This
+     * means the app.js MUST be loaded before the templates.js, otherwise the templates will be overridden.
+     */
+    ngtemplates: {
+      app: {
+        cwd: '.tmp/views',
+        src: 'partials/**/*.html',
+        dest: '.tmp/concat/scripts/templates.js',
+        options: {
+          module: 'cdtApp',
+          htmlmin: {
+            // collapseBooleanAttributes: true,
+            collapseWhitespace: true,
+            // removeAttributeQuotes: true,
+            removeComments: true,
+            // removeEmptyAttributes: true,
+            // removeRedundantAttributes: true,
+            // removeScriptTypeAttributes: true,
+            // removeStyleLinkTypeAttributes: true
+          },
+          usemin: 'scripts/templates.js'
+        }
+      }
+    },
   });
 
   // Used for delaying livereload until after server has restarted
@@ -452,7 +479,6 @@ module.exports = function (grunt) {
       'concurrent:server',
       'autoprefixer',
       'express:dev',
-      'open',
       'watch'
     ]);
   });
@@ -494,8 +520,8 @@ module.exports = function (grunt) {
     'concat',
     'ngmin',
     'copy:dist',
-    'cdnify',
     'cssmin',
+    'ngtemplates',
     'uglify',
     'rev',
     'usemin'

@@ -23,8 +23,21 @@
     </div>
   </div>
 
+  <div class="form-group" ng-class="{ 'has-error': config.urls.$invalid, 'has-warning': containsInvalidUrl() }">
+    <label class="control-label col-xs-2" for="urls">Images: </label>
+    <div class="controls col-xs-10">
+      <textarea name="urls" id="urls" class="form-control" rows="5" ng-model="urls" ng-required="true"></textarea>
+      <p ng-if="isTimePast()" class="text-warning">
+      One of the image URLs is invalid.
+      </p>
+      <p ng-if="config.urls.$error.required" class="text-danger">
+      You must specify a list of urls.
+      </p>
+    </div>
+  </div>
+
   <hr>
   <div class="form-group" ng-class="{'has-error': config.$invalid}">
     <button class="btn btn-block" ui-sref="run({time: endTime})" ng-disabled="config.$invalid" ng-class="{'btn-danger': config.$invalid, 'btn-success': config.$valid}">Start</button>
   </div>
-</ng-form>
+</form>

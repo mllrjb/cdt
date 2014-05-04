@@ -1,11 +1,15 @@
 <!-- partials/run.html -->
-<h1>
-  <div ng-if="isFuture">
-    <timer end-time="millis">
-      <span>{{minutes}}:{{seconds|pad:2}}</span>
-    </timer>
+<div class="full-height" bg-img-slider="backgrounds">
+  <div class="clock" relocate>
+    <h1>
+      <div ng-if="isFuture">
+        <timer end-time="millis">
+          <strong>{{minutes}}:{{seconds|pad:2}}</strong>
+        </timer>
+      </div>
+      <div ng-if="isPast">
+        <span>0:00</span>
+      </div>
+    </h1>
   </div>
-  <div ng-if="isPast">
-    <span>0:00</span>
-  </div>
-</h1>
+</div>

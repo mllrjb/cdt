@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cdtApp')
-  .controller('ConfigCtrl', function ($scope) {
+  .controller('ConfigCtrl', ['$scope', 'localStorageService', function ($scope, localStorageService) {
     $scope.isTimeOpen = false;
 
     $scope.toggleTimeOpen = function($event) {
@@ -13,4 +13,10 @@ angular.module('cdtApp')
     $scope.isTimePast = function() {
       return Date.create($scope.endTime).isPast();
     };
-  });
+
+    $scope.urls = localStorageService.get('urls');
+
+    $scope.$watch('urls', function(val) {
+      localStorageService.set('urls', val);
+    });
+  }]);
