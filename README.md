@@ -1,6 +1,8 @@
 Count Down Timer
 ==============
 
+http://cdt.millerjb.com/
+
 # Usage
 
 Enter in a date using any format supported by http://sugarjs.com/dates. For example, `in 5 minutes`, `at 10:15`, `at 5PM tomorrow`.
